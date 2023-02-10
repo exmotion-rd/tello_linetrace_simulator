@@ -1,0 +1,13 @@
+{
+    "SettingsVersion": 1.2,
+    "SimMode": "Multirotor",
+    "CameraDefaults": {
+        "CaptureSettings": [
+          {
+            "Width": 960,
+            "Height": 720,
+            "FOV_Degrees": 82.6
+          }
+        ]
+      }
+}

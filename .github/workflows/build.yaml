@@ -24,20 +24,20 @@ jobs:
         with:
           registry: 964246069091.dkr.ecr.us-east-1.amazonaws.com
 
-      - name: Build, tag, and push image to Amazon ECR
-        uses: docker/build-push-action@v3
-        with:
-          push: true
-          context: ./bridge
-          tags: |
-            964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:${{ github.sha }}
-            964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:latest
+      # - name: Build, tag, and push image to Amazon ECR
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     push: true
+      #     context: ./bridge
+      #     tags: |
+      #       964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:${{ github.sha }}
+      #       964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:latest
 
       - name: Download simulator binary
         run: |
-          mkdir -p bin
+          mkdir -p simulator/bin
           FILE_ID=1byZo6e2xhInRC_FknhRtpQIYriqKfy_L
-          FILE_NAME=bin/TelloLineTraceAirSim.linux.bin.zip
+          FILE_NAME=simulator/bin/TelloLineTraceAirSim.linux.bin.zip
           curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" > /dev/null
           CODE="$(awk '/_warning_/ {print $NF}' /tmp/cookie)"
           curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&id=${FILE_ID}&confirm=t" -o ${FILE_NAME}

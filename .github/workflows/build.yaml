@@ -41,7 +41,8 @@ jobs:
           curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" > /dev/null
           CODE="$(awk '/_warning_/ {print $NF}' /tmp/cookie)"
           curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&id=${FILE_ID}&confirm=t" -o ${FILE_NAME}
-          unzip -o $FILE_NAME -d bin
+          unzip -o $FILE_NAME -d simulator/bin
+          rm $FILE_NAME
 
       - name: Build, tag, and push image to Amazon ECR
         uses: docker/build-push-action@v3

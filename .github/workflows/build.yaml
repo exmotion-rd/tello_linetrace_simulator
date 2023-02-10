@@ -24,14 +24,14 @@ jobs:
         with:
           registry: 964246069091.dkr.ecr.us-east-1.amazonaws.com
 
-      # - name: Build, tag, and push image to Amazon ECR
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     push: true
-      #     context: ./bridge
-      #     tags: |
-      #       964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:${{ github.sha }}
-      #       964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:latest
+      - name: Build, tag, and push image to Amazon ECR
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: ./bridge
+          tags: |
+            964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:${{ github.sha }}
+            964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge:latest
 
       - name: Download simulator binary
         run: |

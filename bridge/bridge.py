@@ -32,6 +32,16 @@ class TelloAirSimBridge:
         self.video_comm_thread = threading.Thread(target = self._video_comm_proc)
         self.recording_thread = threading.Thread(target = self._recording_proc)
 
+    def wait_for_connection(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        while True:
+            try:
+                s.connect(('127.0.0.1', 41451))
+                s.close()
+                return
+            except socket.error as e:
+                time.sleep(1)
+
     @property
     def running(self):
         with self.lock:
@@ -317,6 +327,7 @@ class TelloAirSimBridge:
 def main():
     try:
         bridge = TelloAirSimBridge()
+        bridge.wait_for_connection()
         bridge.start()
         while True:
             time.sleep(0.1)

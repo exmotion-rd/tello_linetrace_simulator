@@ -5,7 +5,6 @@ on:
 jobs:
   changes:
     runs-on: ubuntu-latest
-    name: Check changes
     outputs:
       simulator: ${{ steps.filter.outputs.simulator }}
       bridge: ${{ steps.filter.outputs.bridge }}
@@ -15,6 +14,7 @@ jobs:
       - id: filter
         uses: dorny/paths-filter@v2
         with:
+          base: ${{ github.ref }}
           filters: |
             simulator:
               - 'simulator/**/*'
@@ -22,9 +22,9 @@ jobs:
               - 'bridge/**/*'
 
   build_simulator:
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.simulator == 'true' }}
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -65,9 +65,9 @@ jobs:
             964246069091.dkr.ecr.us-east-1.amazonaws.com/simulator:latest
 
   build_bridge:
+    runs-on: ubuntu-latest
     needs: changes
     if: ${{ needs.changes.outputs.bridge == 'true' }}
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3

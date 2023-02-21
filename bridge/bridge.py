@@ -30,7 +30,6 @@ class TelloAirSimBridge:
         self.control_comm_thread = threading.Thread(target = self._control_comm_proc)
         self.state_comm_thread = threading.Thread(target = self._state_comm_proc)
         self.video_comm_thread = threading.Thread(target = self._video_comm_proc)
-        self.recording_thread = threading.Thread(target = self._recording_proc)
 
     def wait_for_connection(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -82,14 +81,12 @@ class TelloAirSimBridge:
         self.control_comm_thread.start()
         self.state_comm_thread.start()
         self.video_comm_thread.start()
-        self.recording_thread.start()
 
     def stop(self):
         self.running = False
         self.control_comm_thread.join()
         self.state_comm_thread.join()
         self.video_comm_thread.join()
-        self.recording_thread.join()
 
 
     def _control_comm_proc(self):
@@ -308,20 +305,6 @@ class TelloAirSimBridge:
                 process.stdin.flush()
         
         process.kill()
-
-
-    def _recording_proc(self):
-        airsim_client = airsim.MultirotorClient()
-        airsim_client.confirmConnection()
-        airsim_client.enableApiControl(True)
-
-        airsim_client.startRecording()
-
-        while self.running:
-            time.sleep(0.1)
-        
-        airsim_client.stopRecording()
-
 
 
 def main():

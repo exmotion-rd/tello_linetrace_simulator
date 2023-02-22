@@ -41,7 +41,7 @@ jobs:
           docker-compose down
 
       - name: Upload Recording Data
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: airsim_recording_data
           path: ${{ runner.temp }}/airsim

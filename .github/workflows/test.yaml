@@ -24,3 +24,24 @@ jobs:
       - name: Pull Docker Images
         run: |
           docker pull 964246069091.dkr.ecr.us-east-1.amazonaws.com/linetrace_control
+          docker pull 964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge
+          docker pull 964246069091.dkr.ecr.us-east-1.amazonaws.com/simulator
+
+      - name: Run Test
+        run: |
+          export AIRSIM_RECORDING_DIR=${{ runner.temp }}/airsim
+          mkdir -p $AIRSIM_RECORDING_DIR
+          chmod 777 $AIRSIM_RECORDING_DIR
+          docker-compose up -d
+          sleep 10
+          python3 recording.py start
+          python3 test.py
+          python3 recording.py stop
+          sleep 10
+          docker-compose down
+
+      - name: Upload Recording Data
+      - uses: actions/upload-artifact@v3
+        with:
+          name: airsim_recording_data
+          path: ${{ runner.temp }}/airsim

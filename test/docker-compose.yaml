@@ -11,7 +11,7 @@ services:
     network_mode: host
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - /tmp/airsim:/tmp/airsim
+      - ${AIRSIM_RECORDING_DIR}:/tmp/airsim
     command:
       ./bin/TelloLineTraceAirSim.linux.bin/TelloLineTraceAirSim.sh -RenderOffscreen
 

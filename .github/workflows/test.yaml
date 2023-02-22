@@ -39,6 +39,7 @@ jobs:
           python3 recording.py stop
           sleep 10
           docker-compose down
+        working-directory: test
 
       - name: Upload Recording Data
         uses: actions/upload-artifact@v3

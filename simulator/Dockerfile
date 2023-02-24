@@ -20,26 +20,21 @@ RUN apt-get update \
  && apt-get install --no-install-recommends -y \
         build-essential sudo \
         cmake \
+        curl \
         gdb \
         git \
-        vim \
-        tmux \
-        wget \
-        curl \
-        less \
         htop \
-        python3-pip \
-        python-tk \
+        libsdl2-dev \
         libsm6 libxext6 \
         libboost-all-dev zlib1g-dev \
         lsb-release \
+        less \
+        tmux \
+        vim \
+        wget \
+        python3-pip \
+        python-tk \
  && apt-get clean
-
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
-        libsdl2-dev \
-        && \
-    apt-get clean
 
 ARG VULKAN_VERSION=1.2.131
 
@@ -49,7 +44,8 @@ RUN wget -qO - https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo apt
     wget -qO /etc/apt/sources.list.d/lunarg-vulkan-${VULKAN_VERSION}-bionic-focal.list https://packages.lunarg.com/vulkan/${VULKAN_VERSION}/lunarg-vulkan-${VULKAN_VERSION}-bionic.list && \
     apt update && \
     apt install vulkan-sdk -y && \
-    apt-get clean
+    apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copied from
 # https://github.com/carla-simulator/carla/blob/78e7ea11306ca164fb664ec74d2224f2e1d01923/Util/Docker/Release.Dockerfile#L15

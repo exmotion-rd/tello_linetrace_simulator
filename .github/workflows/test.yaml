@@ -29,15 +29,13 @@ jobs:
 
       - name: Run Test
         run: |
-          export AIRSIM_RECORDING_DIR=${{ runner.temp }}/airsim
-          mkdir -p $AIRSIM_RECORDING_DIR
-          chmod 777 $AIRSIM_RECORDING_DIR
           docker-compose up -d
           sleep 10
           python3 recording.py start
           python3 test.py
           python3 recording.py stop
           sleep 10
+          docker-compose cp simulator:/home/myuser/Documents/AirSim/ ${{ runner.temp }}/AirSim/
           docker-compose down
         working-directory: test
 
@@ -45,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: airsim_recording_data
-          path: ${{ runner.temp }}/airsim
+          path: ${{ runner.temp }}/AirSim

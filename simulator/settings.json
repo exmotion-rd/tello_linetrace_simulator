@@ -13,7 +13,6 @@
   "Recording": {
     "RecordOnMove": false,
     "RecordInterval": 0.5,
-    "Folder": "/tmp/airsim",
     "Enabled": false
   }
 }

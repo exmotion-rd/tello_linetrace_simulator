@@ -66,8 +66,10 @@ RUN VULKAN_API_VERSION=`dpkg -s libvulkan1 | grep -oP 'Version: [0-9|\.]+' | gre
 
 RUN groupadd -r mygroup
 RUN useradd -r -g mygroup myuser
-USER myuser
-WORKDIR /home/myuser
 
 COPY bin/ /home/myuser/bin/
 COPY settings.json /home/myuser/Documents/AirSim/settings.json
+RUN chown -R myuser:mygroup /home/myuser
+
+USER myuser
+WORKDIR /home/myuser

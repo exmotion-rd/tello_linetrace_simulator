@@ -1,6 +1,6 @@
 services:
   simulator:
-    image: 964246069091.dkr.ecr.us-east-1.amazonaws.com/simulator
+    image: ${SIMULATOR_IMAGE}
     deploy:
       resources:
         reservations:
@@ -15,13 +15,13 @@ services:
       ./bin/TelloLineTraceAirSim.linux.bin/TelloLineTraceAirSim.sh -RenderOffscreen
 
   bridge:
-    image: 964246069091.dkr.ecr.us-east-1.amazonaws.com/bridge
+    image: ${BRIDGE_IMAGE}
     network_mode: host
     command:
       python bridge.py
 
   contrller:
-    image: 964246069091.dkr.ecr.us-east-1.amazonaws.com/linetrace_control
+    image: ${CONTROLLER_IMAGE}
     network_mode: host
     # environment:
     #   - DISPLAY=${DISPLAY}

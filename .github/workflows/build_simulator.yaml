@@ -36,6 +36,10 @@ jobs:
         with:
           registry: 964246069091.dkr.ecr.us-east-1.amazonaws.com
 
+      - name: Unzip simulator binary
+        run: |
+          unzip -o simulator/LinetraceWorld.zip -d simulator/bin
+
       - name: Build image
         if: github.event.pull_request.merged == false
         uses: docker/build-push-action@v3
